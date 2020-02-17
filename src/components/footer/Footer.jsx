@@ -6,27 +6,23 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
-    height: '200px',
-    position: 'fixed',
-    width: '100%',
   },
 }));
 
 export default function Footer() {
   const classes = useStyles();
-
   return (
 
-    <>
+    <footer className={classes.footer}>
       <CssBaseline />
-      <footer className={classes.footer}>
+      <div>
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
           Something here to give the footer a purpose!
         </Typography>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }

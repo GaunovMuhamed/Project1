@@ -1,13 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import Checkboxes from './components/checkboxes'
+import {BrowserRouter as Router, Route, Switch, Link, Redirect} from 'react-router-dom'
 
+//Pages
+import SignIn from './components/signInAndRegister/SignIn'
+import Register from './components/signInAndRegister/Register'
+import Main from './components/main/Main'
 
 
 function App() {
-  return (
-    <Checkboxes />
-  );
+  return <Router>
+    <Switch>
+    <Route exact path="/" component={Main}/>
+    <Route exact path="/signin" component={SignIn} />
+    <Route exact path="/register" component={Register} />
+    </Switch>
+  </Router>
 }
 
 export default App;

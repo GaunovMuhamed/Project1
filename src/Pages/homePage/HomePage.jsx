@@ -11,9 +11,8 @@ import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-export default function MainContainer() {
-
-  const useStyles = makeStyles(theme => ({
+export default function Main() {
+  const useStyles = makeStyles((theme) => ({
     heroContent: {
       backgroundColor: theme.palette.background.paper,
       padding: theme.spacing(8, 0, 6),
@@ -44,7 +43,7 @@ export default function MainContainer() {
 
   return (
 
-    <React.Fragment>
+    <>
       <CssBaseline />
       <main>
         {/* Hero unit */}
@@ -58,7 +57,7 @@ export default function MainContainer() {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map(card => (
+            {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                   <CardMedia
@@ -88,6 +87,6 @@ export default function MainContainer() {
           </Grid>
         </Container>
       </main>
-    </React.Fragment>
+    </>
   );
 }

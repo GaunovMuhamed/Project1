@@ -9,18 +9,17 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
 }));
 
 export default function Header() {
-
   const classes = useStyles();
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
@@ -29,7 +28,7 @@ export default function Header() {
               <CameraIcon className={classes.icon} />
               <Typography variant="h6" color="inherit" noWrap>
                 Company
-          </Typography>
+              </Typography>
             </Box>
 
             <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
@@ -40,11 +39,11 @@ export default function Header() {
 
             <Button variant="contained" color="primary" disableElevation>
               Sign In
-          </Button>
+            </Button>
 
           </Box>
         </Toolbar>
       </AppBar>
-    </React.Fragment>
+    </>
   );
 }

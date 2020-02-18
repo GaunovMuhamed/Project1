@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
+  headerStyle: {
+    position: 'fixed',
+  },
 }));
 
 export default function Header() {
@@ -21,7 +24,7 @@ export default function Header() {
   return (
     <>
       <CssBaseline />
-      <AppBar position="relative">
+      <AppBar className={classes.headerStyle}>
         <Toolbar>
           <Box display="flex" justifyContent="space-around" m={1} p={1} width="100%">
             <Box display="flex">
@@ -32,12 +35,11 @@ export default function Header() {
             </Box>
 
             <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-              <Button>One</Button>
-              <Button>Two</Button>
-              <Button>Three</Button>
+              <Button href="http://localhost:3000/">Main</Button>
+              <Button href="http://localhost:3000/projects">Projects</Button>
             </ButtonGroup>
 
-            <Button variant="contained" color="primary" disableElevation>
+            <Button href="http://localhost:3000/signin" variant="contained" color="primary" disableElevation>
               Sign In
             </Button>
 

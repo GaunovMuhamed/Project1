@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import SignIn from './Pages/signIn/SignIn';
-import Register from './Pages/register/Register';
-import HomePage from './Pages/homePage/HomePage';
-import Projects from './Pages/projects/Projects';
-import Header from './components/header/Header';
+import SignIn from './pages/SignIn/SignIn';
+import Register from './pages/Register/Register';
+import HomePage from './pages/HomePage/HomePage';
+import Projects from './pages/Projects/Projects';
+import Header from './components/Header/Header';
+import AboutUser from './pages/AboutUserPage/AboutUserPage';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/projects" component={Projects} />
+        <Route exact path="/aboutuser" component={AboutUser} />
       </Switch>
 
     </Router>

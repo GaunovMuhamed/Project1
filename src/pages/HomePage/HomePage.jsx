@@ -36,7 +36,7 @@ export default function HomePage() {
     },
     bigImageText: {
       position: 'absolute',
-      top: '15rem',
+      top: '11rem',
       left: '50%',
       transform: 'translate(-50%, -50%)',
       color: '#5C6BC0',

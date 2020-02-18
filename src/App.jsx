@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-import SignIn from './Pages/signIn/SignIn';
-import Register from './Pages/register/Register';
-import HomePage from './Pages/homePage/HomePage';
-import AllProjects from './Pages/projects/Projects';
-import Header from './components/header/Header';
-import Footer from './components/footer/Footer';
+import SignIn from './pages/SignIn/SignIn';
+import Register from './pages/Register/Register';
+import HomePage from './pages/HomePage/HomePage';
+import AllProjects from './pages/Projects/Projects';
+import Header from './components/Header/Header';
+import AboutUser from './pages/AboutUserPage/AboutUserPage';
 
 function App() {
   return (
@@ -17,8 +16,8 @@ function App() {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/allprojects" component={AllProjects} />
+        <Route exact path="/aboutuser" component={AboutUser} />
       </Switch>
-      <Footer />
     </Router>
   );
 }

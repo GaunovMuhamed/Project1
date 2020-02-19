@@ -47,9 +47,9 @@ export default function HomePage() {
 
   return (
 
-    <div>
+    <>
       <CssBaseline />
-      <main>
+      <main className={classes.mainHolder}>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <LazyLoadImage
@@ -76,6 +76,6 @@ export default function HomePage() {
         </Container>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }

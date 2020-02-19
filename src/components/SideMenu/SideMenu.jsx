@@ -33,8 +33,8 @@ const SideMenu = (props) => {
     >
       <List>
         {['Homepage', 'Workers', 'Projects', 'Statistics'].map((text, index) => (
-          <Link key={text} to={`/${text === 'Homepage' ? '' : text.toLowerCase}`}>
-            <ListItem button key={text}>
+          <Link key={text} to={`/${text === 'Homepage' ? '' : text.toLowerCase()}`}>
+            <ListItem button>
               <ListItemIcon>{sideIcons[index]}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

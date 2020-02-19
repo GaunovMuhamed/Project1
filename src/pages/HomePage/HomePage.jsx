@@ -1,14 +1,14 @@
 import React from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import CardMedia from '@material-ui/core/CardMedia';
 import Card from '../../components/Card/Card';
 import Footer from '../../components/Footer/Footer';
 import BigImage from '../../assets/images/mainPageImage.jpg';
-
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export default function HomePage() {
   const useStyles = makeStyles((theme) => ({
@@ -28,9 +28,6 @@ export default function HomePage() {
       display: 'flex',
       flexDirection: 'column',
     },
-    cardMedia: {
-      paddingBottom: '40rem',
-    },
     cardContent: {
       flexGrow: 1,
     },
@@ -47,6 +44,7 @@ export default function HomePage() {
 
   const classes = useStyles();
 
+
   return (
 
     <div>
@@ -54,10 +52,13 @@ export default function HomePage() {
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
-          <CardMedia
-            className={classes.cardMedia}
-            image={BigImage}
-            title="Image title"
+          <LazyLoadImage
+            alt={BigImage.alt}
+            height="700px"
+            src={BigImage}
+            width="100%"
+            effect="blur"
+            threshold="10"
           />
           <Typography className={classes.bigImageText} gutterBottom variant="h1" component="h2">
             Company Text

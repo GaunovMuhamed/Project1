@@ -8,20 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import { Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import MenuOpenSharp from '@material-ui/icons/MenuOpenSharp';
 import blue from '@material-ui/core/colors/blue';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import HomeSharp from '@material-ui/icons/HomeSharp';
-import PeopleAltSharp from '@material-ui/icons/PeopleAltSharp';
-import WorkSharp from '@material-ui/icons/WorkSharp';
-import EqualizerSharp from '@material-ui/icons/EqualizerSharp';
-
+import Grid from '@material-ui/core/Grid';
+import SideMenu from '../SideMenu/SideMenu';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -39,22 +30,25 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginTop: '4.28rem',
-    background: fade(blue[50], 0.5),
+    background: fade(blue[50], 0.7),
     width: 'auto',
+    height: '2rem',
     position: 'absolute',
     color: blue[500],
     padding: '10px',
     '&:hover': {
-      color: blue[600],
+      color: blue[700],
+      background: fade(blue[50], 0.5),
     },
   },
-  headToolbar: {
-
+  hoveredicon: {
+    marginTop: '-6px',
   },
 }));
 
-export default function Header() {
+export default function Header(props) {
   const classes = useStyles();
+
 
   const [leftToggle, setToggle] = React.useState(false);
 
@@ -62,51 +56,16 @@ export default function Header() {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setToggle(open);
   };
-
-  const sideIcons = [<HomeSharp />, <PeopleAltSharp />, <WorkSharp />, <EqualizerSharp />];
-
-  const sideList = () => (
-    <div
-      className={classes.list}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List>
-        {['Homepage', 'Workers', 'Projects', 'Statistics'].map((text, index) => (
-          <Link to={`/${text === 'Homepage' ? '' : text.toLowerCase()}`}>
-            <ListItem button key={text}>
-              <ListItemIcon>{sideIcons[index]}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-      <Divider />
-      {/* <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
-    </div>
-  );
-
 
   return (
     <>
       <CssBaseline />
       <AppBar position="relative" className={classes.header}>
         <Toolbar className={classes.headToolbar}>
-          <Drawer open={leftToggle} onClose={toggleDrawer(false)}>
-            {sideList()}
-          </Drawer>
-          <Box display="flex" justifyContent="space-around" m={1} p={1} width="100%">
+          <SideMenu leftToggle={leftToggle} toggleDrawer={toggleDrawer} />
+          <Box display="flex" justifyContent="space-between" m={1} pl={2} pr={2} width="100%">
             <Box display="flex">
               <CameraIcon className={classes.icon} />
               <Typography variant="h6" color="inherit" noWrap>

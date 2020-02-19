@@ -1,26 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Tooltip from '@material-ui/core/Tooltip';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
+import HeaderColumn from './HeaderColumn';
+import TableToolbar from './ToolbarTable';
+import BadgeStatus from './BadgeStatus';
+// import PropTypes from 'prop-types';
 
-const rows = [
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -48,136 +43,6 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-  {
-    id: 'project', numeric: false, disablePadding: true, label: 'Project',
-  },
-  {
-    id: 'information', numeric: true, disablePadding: false, label: 'Information',
-  },
-  {
-    id: 'status', numeric: true, disablePadding: false, label: 'Status',
-  },
-];
-
-function EnhancedTableHead(props) {
-  const {
-    classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
-const useToolbarStyles = makeStyles((theme) => ({
-  root: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(1),
-  },
-  highlight:
-    theme.palette.type === 'light'
-      ? {
-        color: theme.palette.secondary.main,
-        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-      }
-      : {
-        color: theme.palette.text.primary,
-        backgroundColor: theme.palette.secondary.dark,
-      },
-  title: {
-    flex: '1 1 100%',
-  },
-}));
-
-const EnhancedTableToolbar = (props) => {
-  const classes = useToolbarStyles();
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1">
-          {numSelected}
-          {' '}
-          selected
-        </Typography>
-      ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle">
-          Projects
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -185,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     width: '100%',
     marginBottom: theme.spacing(2),
+    boxShadow: '0px 0px 5px',
   },
   table: {
     minWidth: 750,
@@ -200,15 +66,45 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  header: {
+    textAlign: 'center',
+    margin: 50,
+    width: 400,
+  },
 }));
 
 export default function EnhancedTable() {
+  const [projects, setProjects] = useState([{
+    project: 'Project First',
+    developer: 'Kolya Kolya',
+    stack: '1',
+    status: 'active',
+    rait: '20$/hour',
+  },
+  {
+    project: 'Project Second',
+    developer: 'Vasya Vasya',
+    stack: '2',
+    status: 'active',
+    rait: '25$/hour',
+  },
+  {
+    project: 'Project Third',
+    developer: 'Petya Petya',
+    stack: '3',
+    status: 'during',
+    rait: '30$/hour',
+  },
+  ]);
+
+  // const filteredProjects = projects.filter(projects => )
+
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('');
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [projectsPerPage, setProjectsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -218,7 +114,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.project);
+      const newSelecteds = projects.map((n) => n.project);
       setSelected(newSelecteds);
       return;
     }
@@ -249,85 +145,112 @@ export default function EnhancedTable() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handleChangeProjectsPerPage = (event) => {
+    setProjectsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
 
   const isSelected = (project) => selected.indexOf(project) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const emptyProjects = projects - Math.min(projectsPerPage, projects.length - page * projectsPerPage);
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.project);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+    <>
+      <Grid
+        container
+        direction="column"
+        justify="center"
+        alignItems="center"
+      >
+        <Paper className={classes.header}>
+          <Box>
+            {selected.length > 0 ? (
+              <Typography color="inherit" variant="h6">
+                {selected.length}
+                {' '}
+                Selected
+              </Typography>
+            ) : (
+              <Typography variant="h6" id="tableTitle">
+                Company Projects
+              </Typography>
+            )}
+          </Box>
+        </Paper>
+        <div className={classes.root}>
+          <Paper className={classes.paper}>
+            <TableToolbar numSelected={selected.length} />
+            <TableContainer>
+              <Table
+                className={classes.table}
+                aria-labelledby="tableTitle"
+                aria-label="enhanced table"
+              >
+                <HeaderColumn
+                  classes={classes}
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  projectCount={projects.length}
+                />
+                <TableBody>
+                  {stableSort(projects, getComparator(order, orderBy))
+                    .slice(page * projectsPerPage, page * projectsPerPage + projectsPerPage)
+                    .map((projects, index) => {
+                      const isItemSelected = isSelected(projects.project);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.project)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.project}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.project}
-                      </TableCell>
-                      <TableCell align="right">{row.project}</TableCell>
-                      <TableCell align="right">{row.information}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </div>
+                      return (
+                        <TableRow
+                          hover
+                          onClick={(event) => handleClick(event, projects.project)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={projects.project}
+                          selected={isItemSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              checked={isItemSelected}
+                              inputProps={{ 'aria-labelledby': labelId }}
+                            />
+                          </TableCell>
+                          <TableCell component="th" id={labelId} scope="row" padding="none">
+                            {projects.project}
+                          </TableCell>
+                          <TableCell align="right">
+                            <BadgeStatus projects={projects} />
+                          </TableCell>
+                          <TableCell align="right">{projects.stack}</TableCell>
+                          <TableCell align="right">{projects.developer}</TableCell>
+                          <TableCell align="right">{projects.rait}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyProjects > 0 && (
+                  <TableRow>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={projects.length}
+              rowsPerPage={projectsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeProjectsPerPage}
+            />
+          </Paper>
+        </div>
+      </Grid>
+    </>
   );
 }

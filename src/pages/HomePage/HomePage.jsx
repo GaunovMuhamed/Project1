@@ -9,6 +9,7 @@ import Card from '../../components/Card/Card';
 import Footer from '../../components/Footer/Footer';
 import BigImage from '../../assets/images/mainPageImage.jpg';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Plr from '../../assets/images/placeholder.jpg';
 
 export default function HomePage() {
   const useStyles = makeStyles((theme) => ({
@@ -47,18 +48,17 @@ export default function HomePage() {
 
   return (
 
-    <div>
+    <>
       <CssBaseline />
-      <main>
+      <main className={classes.mainHolder}>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <LazyLoadImage
-            alt={BigImage.alt}
-            height="700px"
             src={BigImage}
+            height="700px"
             width="100%"
             effect="blur"
-            threshold="10"
+            placeholderSrc={Plr}
           />
           <Typography className={classes.bigImageText} gutterBottom variant="h1" component="h2">
             Company Text
@@ -76,6 +76,6 @@ export default function HomePage() {
         </Container>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }

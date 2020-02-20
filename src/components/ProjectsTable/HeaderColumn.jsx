@@ -4,7 +4,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
-// import PropTypes from 'prop-types';
 
 export default function HeaderColumn(props) {
   const headCells = [
@@ -69,14 +68,4 @@ export default function HeaderColumn(props) {
       </TableRow>
     </TableHead>
   );
-
-  // Head.propTypes = {
-  //   classes: PropTypes.object.isRequired,
-  //   numSelected: PropTypes.number.isRequired,
-  //   onRequestSort: PropTypes.func.isRequired,
-  //   onSelectAllClick: PropTypes.func.isRequired,
-  //   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  //   orderBy: PropTypes.string.isRequired,
-  //   projectCount: PropTypes.number.isRequired,
-  // };
 }

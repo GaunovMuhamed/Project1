@@ -3,10 +3,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import AddIcon from '@material-ui/icons/Add';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import SearchTable from './SearchTable';
 
 
 const useToolbarStyles = makeStyles((theme) => ({
@@ -33,9 +32,8 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TableToolbar(props) {
+export default function TableToolbar(numSelected) {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
 
   const toolBarClassName = clsx(classes.root, {
     [classes.highlight]: numSelected > 0,
@@ -46,24 +44,17 @@ export default function TableToolbar(props) {
       <Toolbar
         className={toolBarClassName}
       >
-        <SearchTable />
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton aria-label="delete">
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+        <Tooltip title="Delete">
+          <IconButton aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Add">
+          <IconButton aria-label="add">
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
       </Toolbar>
     </>
   );
-  // TableToolbar.propTypes = {
-  //   numSelected: PropTypes.number.isRequired,
-  // };
 }

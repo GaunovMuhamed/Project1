@@ -7,14 +7,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import HeaderColumn from './HeaderColumn';
 import TableToolbar from './ToolbarTable';
-import BadgeStatus from './BadgeStatus';
-// import PropTypes from 'prop-types';
+import SearchTable from './SearchTable';
+import ProjectList from './ProjectsList';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -67,9 +66,12 @@ const useStyles = makeStyles((theme) => ({
     width: 1,
   },
   header: {
-    textAlign: 'center',
-    margin: 50,
-    width: 400,
+    marginTop: 50,
+    marginBottom: 50,
+    marginLeft: 0,
+    marginRight: 0,
+    width: 'max-content',
+
   },
 }));
 
@@ -80,6 +82,7 @@ export default function EnhancedTable() {
     stack: '1',
     status: 'active',
     rait: '20$/hour',
+    id: '1',
   },
   {
     project: 'Project Second',
@@ -87,6 +90,7 @@ export default function EnhancedTable() {
     stack: '2',
     status: 'active',
     rait: '25$/hour',
+    id: '2',
   },
   {
     project: 'Project Third',
@@ -94,11 +98,11 @@ export default function EnhancedTable() {
     stack: '3',
     status: 'during',
     rait: '30$/hour',
+    id: '3',
   },
   ]);
 
-  // const filteredProjects = projects.filter(projects => )
-
+  const [searchKey, setSearchKey] = useState('');
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('');
@@ -111,6 +115,13 @@ export default function EnhancedTable() {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
+  const filteredProjects = projects.filter((project) => project.project.toLowerCase().includes(searchKey.toLowerCase())
+  || project.developer.toLowerCase().includes(searchKey.toLowerCase())
+  || project.stack.toLowerCase().includes(searchKey)
+  || project.status.toLowerCase().includes(searchKey)
+  || project.rait.toLowerCase().includes(searchKey));
+
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -161,9 +172,9 @@ export default function EnhancedTable() {
         container
         direction="column"
         justify="center"
-        alignItems="center"
+        alignItems="left"
       >
-        <Paper className={classes.header}>
+        <Box className={classes.header}>
           <Box>
             {selected.length > 0 ? (
               <Typography color="inherit" variant="h6">
@@ -177,10 +188,13 @@ export default function EnhancedTable() {
               </Typography>
             )}
           </Box>
-        </Paper>
+        </Box>
         <div className={classes.root}>
           <Paper className={classes.paper}>
-            <TableToolbar numSelected={selected.length} />
+            <TableContainer>
+              <SearchTable handleChange={setSearchKey} searchKey={searchKey} />
+              <TableToolbar numSelected={selected.length} />
+            </TableContainer>
             <TableContainer>
               <Table
                 className={classes.table}
@@ -197,7 +211,7 @@ export default function EnhancedTable() {
                   projectCount={projects.length}
                 />
                 <TableBody>
-                  {stableSort(projects, getComparator(order, orderBy))
+                  {stableSort(filteredProjects, getComparator(order, orderBy))
                     .slice(page * projectsPerPage, page * projectsPerPage + projectsPerPage)
                     .map((projects, index) => {
                       const isItemSelected = isSelected(projects.project);
@@ -213,21 +227,7 @@ export default function EnhancedTable() {
                           key={projects.project}
                           selected={isItemSelected}
                         >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              inputProps={{ 'aria-labelledby': labelId }}
-                            />
-                          </TableCell>
-                          <TableCell component="th" id={labelId} scope="row" padding="none">
-                            {projects.project}
-                          </TableCell>
-                          <TableCell align="right">
-                            <BadgeStatus projects={projects} />
-                          </TableCell>
-                          <TableCell align="right">{projects.stack}</TableCell>
-                          <TableCell align="right">{projects.developer}</TableCell>
-                          <TableCell align="right">{projects.rait}</TableCell>
+                          <ProjectList isItemSelected={isItemSelected} labelId={labelId} projects={projects} />
                         </TableRow>
                       );
                     })}

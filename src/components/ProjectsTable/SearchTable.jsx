@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Input, FormControl } from '@material-ui/core';
 
-const useToolbarStyles = makeStyles((theme) => ({
+
+const useToolbarStyles = makeStyles(() => ({
   search: {
     flex: '1 1 100%',
     justifyItems: 'center',
+    width: '100%',
+  },
+  input: {
+    paddingLeft: 15,
   },
 }));
 
-export default function SearchTable(props) {
-  const [searchKey, setSearchKey] = useState('');
-  console.log(searchKey);
+export default function SearchTable({ handleChange, searchKey }) {
   const classes = useToolbarStyles();
+  const onChange = (e) => handleChange(e.target.value);
+
   return (
-    <TextField className={classes.search} value={searchKey} placeholder="Search" />
+    <FormControl className={classes.search}>
+      <Input onChange={onChange} value={searchKey} placeholder="Search" className={classes.input} />
+    </FormControl>
   );
 }

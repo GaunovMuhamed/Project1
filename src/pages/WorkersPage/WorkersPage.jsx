@@ -26,12 +26,20 @@ const useStyles = makeStyles((theme) => ({
   },
   workersMainHolder: {
     maxWidth: '100%',
+    padding: '24px',
   },
   gridHolder: {
     maxWidth: '90%',
   },
   upperPanel: {
-    maxWidth: '100%',
+    paddingTop: '1rem',
+    maxWidth: 'max-content',
+    boxShadow: '0 0',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '0',
+    marginBottom: '0',
+    background: '#ffffff',
   },
 }));
 
@@ -72,9 +80,15 @@ export default function SideMenu() {
 
   const developers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  const interns = [1, 2, 3, 4, 5];
+  const interns = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-  const [workers, setWorkers] = useState({ developers, interns });
+  const sales = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  const hr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  const [workers, setWorkers] = useState({
+    developers, interns, sales, hr,
+  });
 
   const [value, setValue] = React.useState(0);
 
@@ -91,6 +105,7 @@ export default function SideMenu() {
           <Container className={classes.gridHolder}>
             <AppBar className={classes.upperPanel} position="static" color="default">
               <Tabs
+                // centered
                 value={value}
                 onChange={handleChange}
                 indicatorColor="primary"
@@ -99,15 +114,14 @@ export default function SideMenu() {
                 scrollButtons="auto"
                 aria-label="scrollable auto tabs example"
               >
-                <Tab label="developers" {...a11yProps(0)} />
-                <Tab label="interns" {...a11yProps(1)} />
-                <Tab label="next" {...a11yProps(2)} />
-                <Tab label="next" {...a11yProps(3)} />
-                <Tab label="next" {...a11yProps(4)} />
+                <Tab label="developers" disableRipple {...a11yProps(0)} />
+                <Tab label="interns" disableRipple {...a11yProps(1)} />
+                <Tab label="sales" disableRipple {...a11yProps(2)} />
+                <Tab label="hr" disableRipple {...a11yProps(3)} />
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-              <Grid container spacing={10}>
+              <Grid container spacing={4}>
                 {workers.developers.map((item) => (
                   <Grid item md={3}>
                     <Card />
@@ -116,7 +130,7 @@ export default function SideMenu() {
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <Grid container spacing={10}>
+              <Grid container spacing={4}>
                 {workers.interns.map((item) => (
                   <Grid item md={3}>
                     <Card />
@@ -125,13 +139,22 @@ export default function SideMenu() {
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
-              Item Three
+              <Grid container spacing={4}>
+                {workers.sales.map((item) => (
+                  <Grid item md={3}>
+                    <Card />
+                  </Grid>
+                ))}
+              </Grid>
             </TabPanel>
             <TabPanel value={value} index={3}>
-              Item Four
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-              Item Five
+              <Grid container spacing={4}>
+                {workers.hr.map((item) => (
+                  <Grid item md={3}>
+                    <Card />
+                  </Grid>
+                ))}
+              </Grid>
             </TabPanel>
           </Container>
         </Paper>

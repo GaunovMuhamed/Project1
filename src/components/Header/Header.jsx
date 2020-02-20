@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuOpenSharp from '@material-ui/icons/MenuOpenSharp';
 import blue from '@material-ui/core/colors/blue';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Grid from '@material-ui/core/Grid';
 import SideMenu from '../SideMenu/SideMenu';
 
 const useStyles = makeStyles((theme) => ({

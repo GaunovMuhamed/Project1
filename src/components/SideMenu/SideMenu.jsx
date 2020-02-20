@@ -32,14 +32,17 @@ const SideMenu = (props) => {
       onKeyDown={() => toggleDrawer(false)}
     >
       <List>
-        {['Homepage', 'Workers', 'Projects', 'Statistics'].map((text, index) => (
-          <Link key={text} to={`/${text === 'Homepage' ? '' : text.toLowerCase()}`}>
-            <ListItem button>
-              <ListItemIcon>{sideIcons[index]}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          </Link>
-        ))}
+        {['Homepage', 'Workers', 'Projects', 'Statistics'].map((text, index) => {
+          console.log('KEY', text);
+          return (
+            <Link key={text} to={`/${text === 'Homepage' ? '' : text.toLowerCase()}`}>
+              <ListItem button>
+                <ListItemIcon>{sideIcons[index]}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          );
+        })}
       </List>
       <Divider />
       {/* <List>

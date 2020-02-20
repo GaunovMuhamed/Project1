@@ -1,14 +1,15 @@
 import React from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import CardMedia from '@material-ui/core/CardMedia';
 import Card from '../../components/Card/Card';
 import Footer from '../../components/Footer/Footer';
 import BigImage from '../../assets/images/mainPageImage.jpg';
-
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import Plr from '../../assets/images/placeholder.jpg';
 
 export default function HomePage() {
   const useStyles = makeStyles((theme) => ({
@@ -28,15 +29,12 @@ export default function HomePage() {
       display: 'flex',
       flexDirection: 'column',
     },
-    cardMedia: {
-      paddingBottom: '40rem',
-    },
     cardContent: {
       flexGrow: 1,
     },
     bigImageText: {
       position: 'absolute',
-      top: '15rem',
+      top: '11rem',
       left: '50%',
       transform: 'translate(-50%, -50%)',
       color: '#5C6BC0',
@@ -47,17 +45,20 @@ export default function HomePage() {
 
   const classes = useStyles();
 
+
   return (
 
-    <div>
+    <>
       <CssBaseline />
-      <main>
+      <main className={classes.mainHolder}>
         {/* Hero unit */}
         <div className={classes.heroContent}>
-          <CardMedia
-            className={classes.cardMedia}
-            image={BigImage}
-            title="Image title"
+          <LazyLoadImage
+            src={BigImage}
+            height="700px"
+            width="100%"
+            effect="blur"
+            placeholderSrc={Plr}
           />
           <Typography className={classes.bigImageText} gutterBottom variant="h1" component="h2">
             Company Text
@@ -75,6 +76,6 @@ export default function HomePage() {
         </Container>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }

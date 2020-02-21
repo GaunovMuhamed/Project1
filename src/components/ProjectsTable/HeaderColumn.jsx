@@ -11,6 +11,9 @@ export default function HeaderColumn(props) {
       id: 'projectName', numeric: false, disablePadding: true, label: 'Project Name',
     },
     {
+      id: 'Project Link', numeric: false, disablePadding: true, label: 'Project Links',
+    },
+    {
       id: 'status', numeric: true, disablePadding: false, label: 'Status',
     },
     {

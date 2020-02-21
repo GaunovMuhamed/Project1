@@ -83,22 +83,25 @@ export default function EnhancedTable() {
     status: 'completed',
     rait: '20$/hour',
     id: '1',
+    size: 'small',
   },
   {
     project: 'Project Second',
     developer: 'Vasya Vasya',
     stack: '2',
-    status: 'during',
+    status: 'active',
     rait: '25$/hour',
     id: '2',
+    size: 'tiny',
   },
   {
     project: 'Project Third',
     developer: 'Petya Petya',
     stack: '3',
-    status: 'during',
+    status: 'active',
     rait: '30$/hour',
     id: '3',
+    size: 'large',
   },
   ]);
 

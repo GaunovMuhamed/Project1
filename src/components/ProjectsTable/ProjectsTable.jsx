@@ -80,9 +80,10 @@ export default function EnhancedTable() {
     project: 'Project First',
     developer: 'Kolya Kolya',
     stack: '1',
-    status: 'active',
+    status: 'completed',
     rait: '20$/hour',
     id: '1',
+    size: 'small',
   },
   {
     project: 'Project Second',
@@ -91,14 +92,16 @@ export default function EnhancedTable() {
     status: 'active',
     rait: '25$/hour',
     id: '2',
+    size: 'tiny',
   },
   {
     project: 'Project Third',
     developer: 'Petya Petya',
     stack: '3',
-    status: 'during',
+    status: 'active',
     rait: '30$/hour',
     id: '3',
+    size: 'large',
   },
   ]);
 

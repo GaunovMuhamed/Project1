@@ -14,13 +14,13 @@ const useToolbarStyles = makeStyles(() => ({
   },
 }));
 
-export default function SearchTable({ handleChange, searchKey }) {
+export default function SearchTable(props) {
   const classes = useToolbarStyles();
-  const onChange = (e) => handleChange(e.target.value);
+  const onChange = (e) => props.handleChange(e.target.value);
 
   return (
     <FormControl className={classes.search}>
-      <Input onChange={onChange} value={searchKey} placeholder="Search" className={classes.input} />
+      <Input onChange={onChange} value={props.searchKey} placeholder="Search" className={classes.input} />
     </FormControl>
   );
 }

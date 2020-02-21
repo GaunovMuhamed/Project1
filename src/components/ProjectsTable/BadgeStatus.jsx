@@ -1,27 +1,32 @@
 import React from 'react';
 import Badge from '@material-ui/core/Badge';
-import NoteIcon from '@material-ui/icons/Note';
-import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core';
 
-const useToolbarStyles = makeStyles(() => ({
-  active: {
-    color: 'primary',
-  },
-  completed: {
-    color: 'error',
-  },
-  during: {
-    color: 'secondary',
-  },
-}));
 
-export default function BadgeStatus(projects) {
-  const classes = useToolbarStyles();
+export default function BadgeStatus(props) {
+  const {
+    large, small, tiny, active, icon, completed,
+  } = props;
+  const badgeColor = clsx({
 
+    primary: completed,
+    error: active,
+
+  });
   return (
-    <Badge color="primary" variant="dot">
-      <NoteIcon />
+    <Badge
+      color={badgeColor}
+      overlap="rectangle"
+      badgeContent={clsx(
+        {
+          large,
+          small,
+          tiny,
+        },
+      )}
+    >
+      {icon}
     </Badge>
   );
 }
